@@ -68,7 +68,7 @@ const SignUp = () => {
     <Fragment>
       <div className='pageContainer'>
         <header>
-          <h2 className='pageHeader'>Welcome Back!</h2>
+          <h2 className='pageHeader'>Welcome!</h2>
         </header>
         <main>
           <form onSubmit={formHandler}>
@@ -106,9 +106,6 @@ const SignUp = () => {
                 onClick={() => setShowPassword((prevState) => !prevState)}
               />
             </div>
-            <Link to='forgot-password' className='forgotPasswordLink'>
-              Forgot Password
-            </Link>
             <div className='signUpBar'>
               <p className='signUpText'>Sign Up</p>
               <button className='signUpButton'>

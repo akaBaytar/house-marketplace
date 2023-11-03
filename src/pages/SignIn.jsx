@@ -1,6 +1,8 @@
 import { Fragment } from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 import ArrowIcon from '../assets/svg/keyboardArrowRightIcon.svg?react';
 import VisibilityIcon from '../assets/svg/visibilityIcon.svg';
@@ -13,13 +15,35 @@ const SignIn = () => {
     password: '',
   });
 
+  const navigate = useNavigate();
+
+  // destructuring form data
   const { email, password } = formData;
 
-  const formHandler = (e) => {
+  // handler functions
+  const inputHandler = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.id]: e.target.value,
     }));
+  };
+
+  const formHandler = async (e) => {
+    e.preventDefault();
+
+    // login with email
+    const auth = getAuth();
+
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    // redirecting the user to homepage
+    if (userCredential.user) {
+      navigate('/');
+    }
   };
 
   return (
@@ -29,14 +53,14 @@ const SignIn = () => {
           <h2 className='pageHeader'>Welcome Back!</h2>
         </header>
         <main>
-          <form>
+          <form onSubmit={formHandler}>
             <input
               type='email'
               id='email'
               placeholder='Email'
               className='emailInput'
               value={email}
-              onChange={formHandler}
+              onChange={inputHandler}
               autoComplete='email'
             />
             <div className='passwordInputDiv'>
@@ -46,7 +70,7 @@ const SignIn = () => {
                 placeholder='Password'
                 className='passwordInput'
                 value={password}
-                onChange={formHandler}
+                onChange={inputHandler}
               />
               <img
                 src={VisibilityIcon}
