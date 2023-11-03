@@ -2,6 +2,8 @@ import { Fragment } from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import {toast} from 'react-toastify'
+
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 import ArrowIcon from '../assets/svg/keyboardArrowRightIcon.svg?react';
@@ -31,18 +33,22 @@ const SignIn = () => {
   const formHandler = async (e) => {
     e.preventDefault();
 
-    // login with email
-    const auth = getAuth();
+    try {
+      // login with email
+      const auth = getAuth();
 
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-    // redirecting the user to homepage
-    if (userCredential.user) {
-      navigate('/');
+      // redirecting the user to homepage
+      if (userCredential.user) {
+        navigate('/');
+      }
+    } catch (error) {
+      toast.error('Invalid email and/or password.');
     }
   };
 

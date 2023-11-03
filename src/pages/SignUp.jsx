@@ -3,12 +3,14 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { database } from '../../firebase.config';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
 } from 'firebase/auth';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+
+import { toast } from 'react-toastify';
 
 import ArrowIcon from '../assets/svg/keyboardArrowRightIcon.svg?react';
 import VisibilityIcon from '../assets/svg/visibilityIcon.svg';
@@ -38,30 +40,34 @@ const SignUp = () => {
   const formHandler = async (e) => {
     e.preventDefault();
 
-    // creating user with email
-    const auth = getAuth();
+    try {
+      // creating user with email
+      const auth = getAuth();
 
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    
-    const user = userCredential.user;
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-    updateProfile(auth.currentUser, {
-      displayName: name,
-    });
+      const user = userCredential.user;
 
-    // adding user info to the database
-    const copiedFormData = { ...formData };
-    delete copiedFormData.password;
-    copiedFormData.timestamp = serverTimestamp();
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
 
-    await setDoc(doc(database, 'users', user.uid), copiedFormData);
+      // adding user info to the database
+      const copiedFormData = { ...formData };
+      delete copiedFormData.password;
+      copiedFormData.timestamp = serverTimestamp();
 
-    // redirecting the user to homepage
-    navigate('/');
+      await setDoc(doc(database, 'users', user.uid), copiedFormData);
+
+      // redirecting the user to homepage
+      navigate('/');
+    } catch (error) {
+      toast.error('Something went wrong.');
+    }
   };
 
   return (
