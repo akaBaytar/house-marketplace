@@ -640,7 +640,7 @@ button {
   align-items: center;
 }
 
-.logOut {
+.logout {
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
   font-size: 1rem;
