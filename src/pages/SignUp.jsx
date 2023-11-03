@@ -1,6 +1,14 @@
 import { Fragment } from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { database } from '../../firebase.config';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from 'firebase/auth';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 import ArrowIcon from '../assets/svg/keyboardArrowRightIcon.svg?react';
 import VisibilityIcon from '../assets/svg/visibilityIcon.svg';
@@ -14,13 +22,46 @@ const SignUp = () => {
     password: '',
   });
 
+  const navigate = useNavigate();
+
+  // destructuring form data
   const { name, email, password } = formData;
 
-  const formHandler = (e) => {
+  // handler functions
+  const inputHandler = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.id]: e.target.value,
     }));
+  };
+
+  const formHandler = async (e) => {
+    e.preventDefault();
+
+    // creating user with email
+    const auth = getAuth();
+
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    
+    const user = userCredential.user;
+
+    updateProfile(auth.currentUser, {
+      displayName: name,
+    });
+
+    // adding user info to the database
+    const copiedFormData = { ...formData };
+    delete copiedFormData.password;
+    copiedFormData.timestamp = serverTimestamp();
+
+    await setDoc(doc(database, 'users', user.uid), copiedFormData);
+
+    // redirecting the user to homepage
+    navigate('/');
   };
 
   return (
@@ -30,14 +71,14 @@ const SignUp = () => {
           <h2 className='pageHeader'>Welcome Back!</h2>
         </header>
         <main>
-          <form>
+          <form onSubmit={formHandler}>
             <input
               type='text'
               id='name'
               placeholder='Name'
               className='nameInput'
               value={name}
-              onChange={formHandler}
+              onChange={inputHandler}
               autoComplete='name'
             />
             <input
@@ -46,7 +87,7 @@ const SignUp = () => {
               placeholder='Email'
               className='emailInput'
               value={email}
-              onChange={formHandler}
+              onChange={inputHandler}
               autoComplete='email'
             />
             <div className='passwordInputDiv'>
@@ -56,7 +97,7 @@ const SignUp = () => {
                 placeholder='Password'
                 className='passwordInput'
                 value={password}
-                onChange={formHandler}
+                onChange={inputHandler}
               />
               <img
                 src={VisibilityIcon}
