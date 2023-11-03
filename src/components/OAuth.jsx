@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 
-import { database } from '../../firebase.config';
+import { database } from '../config/firebase.config';
 import { toast } from 'react-toastify';
 
 import GoogleIcon from '../assets/svg/googleIcon.svg';
@@ -35,7 +35,6 @@ const OAuth = () => {
 
       // redirecting the user to homepage
       navigate('/');
-
     } catch (error) {
       toast.error('Authorization could not be completed.');
     }

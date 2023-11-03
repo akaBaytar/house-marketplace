@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { database } from '../../firebase.config';
+import { database } from '../config/firebase.config';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import {
   getAuth,

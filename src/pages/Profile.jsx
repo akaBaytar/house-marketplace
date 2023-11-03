@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { doc, updateDoc } from 'firebase/firestore';
 import { getAuth, updateProfile } from 'firebase/auth';
 
-import { database } from '../../firebase.config';
+import { database } from '../config/firebase.config';
 import { toast } from 'react-toastify';
 
 const Profile = () => {

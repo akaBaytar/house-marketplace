@@ -13,11 +13,13 @@ const ForgotPassword = () => {
   const onChange = (e) => setEmail(e.target.value);
 
   const onSubmit = async (e) => {
-    e.preventDefault;
+    e.preventDefault();
     try {
       const auth = getAuth();
 
       await sendPasswordResetEmail(auth, email);
+
+      setEmail('')
 
       toast.success('Password reset email has been sent.');
     } catch (error) {
