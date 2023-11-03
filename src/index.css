@@ -230,36 +230,47 @@ button {
 }
 
 .signInBar,
-.signUpBar {
+.signUpBar,
+.forgotPasswordBar {
+  position: inherit;
   margin-top: 3rem;
+  padding: 0 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: inherit;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
 }
 
 .signInButton,
 .signUpButton,
+.forgotPasswordButton,
 .signInText,
-.signUpText {
+.signUpText,
+.forgotPasswordText {
   cursor: pointer;
 }
 
 @media (min-width: 1024px) {
   .signInBar,
-  .signUpBar {
+  .signUpBar,
+  .forgotPasswordBar {
+    gap: 1rem;
     justify-content: start;
+    max-width: fit-content;
   }
 }
 
 .signInText,
-.signUpText {
+.signUpText,
+.forgotPasswordText {
   font-size: 1.5rem;
   font-weight: 700;
 }
 
 .signInButton,
-.signUpButton {
+.signUpButton,
+.forgotPasswordButton {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -691,7 +702,7 @@ button {
   margin: 0.3rem 0;
   font-weight: 600;
   width: 100%;
-    border-radius: 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .profileNameActive {
