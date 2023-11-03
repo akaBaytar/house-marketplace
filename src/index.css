@@ -30,6 +30,13 @@ button {
   border: none;
 }
 
+@media (min-width: 1024px) {
+  form {
+    margin-inline: auto;
+    max-width: 25rem;
+  }
+}
+
 .input,
 .passwordInput,
 .emailInput,
@@ -234,7 +241,7 @@ button {
 .forgotPasswordBar {
   position: inherit;
   margin-top: 3rem;
-  padding: 0 0.5rem;
+  padding-inline: 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -255,9 +262,9 @@ button {
   .signInBar,
   .signUpBar,
   .forgotPasswordBar {
-    gap: 1rem;
-    justify-content: start;
-    max-width: fit-content;
+    margin: 2rem auto;
+    padding-inline: 1rem;
+    max-width: 25rem;
   }
 }
 
@@ -282,16 +289,27 @@ button {
 
 @media (min-width: 1024px) {
   .signInButton,
-  .signUpButton {
-    margin-left: 3rem;
+  .signUpButton,
+  .forgotPasswordButton {
+    margin-left: 5rem;
   }
 }
 
 .socialLogin {
-  margin-top: 4rem;
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
+}
+
+@media (min-width: 1024px) {
+  .socialLogin {
+    margin: 2rem auto;
+    padding-inline: 1rem;
+    max-width: 25rem;
+  }
 }
 
 .socialIconDiv {
@@ -313,11 +331,10 @@ button {
 }
 
 .registerLink {
-  margin-top: 4rem;
+  margin-block: 2rem;
   color: var(--accent-color);
   font-weight: 600;
   text-align: center;
-  margin-bottom: 3rem;
 }
 
 @media (min-width: 1217px) {
