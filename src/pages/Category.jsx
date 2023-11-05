@@ -76,12 +76,16 @@ const Category = () => {
         <main>
           <ul className='categoryListings'>
             {listings.map((listing) => (
-              <ListingItem key={listing.id} listing={listing.data} id={listing}/>
+              <ListingItem
+                key={listing.id}
+                listing={listing.data}
+                id={listing}
+              />
             ))}
           </ul>
         </main>
       ) : (
-        `No listings for ${params.categoryName}`
+        <p>No listings for {params.categoryName}</p>
       )}
     </div>
   );
