@@ -73,8 +73,8 @@ const Category = () => {
       {isLoading ? (
         <Spinner />
       ) : listings && listings.length > 0 ? (
-        <main>
-          <ul className='categoryListings'>
+        <main className='center'>
+          <ul className='categoryListings' style={{ marginLeft: '2.5rem' }}>
             {listings.map((listing) => (
               <ListingItem
                 key={listing.id}
