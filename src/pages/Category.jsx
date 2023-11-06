@@ -79,7 +79,7 @@ const Category = () => {
               <ListingItem
                 key={listing.id}
                 listing={listing.data}
-                id={listing}
+                id={listing.id}
               />
             ))}
           </ul>
