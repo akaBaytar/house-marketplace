@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import {
   getStorage,
   ref,
@@ -16,7 +17,9 @@ import { toast } from 'react-toastify';
 import Spinner from '../components/Spinner';
 
 const CreateListing = () => {
-  const [geolocationEnabled, setGeolocationEnabled] = useState(true);
+  // coordinates are obtained through the OpenCage API. 
+  // if you want to enter them manually instead of using the API, set the value to false.
+  const geolocationEnabled = true;
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -161,13 +164,31 @@ const CreateListing = () => {
     const imageUrls = await Promise.all(
       [...images].map((image) => storeImage(image))
     ).catch(() => {
-      setIsLoading(false)
-      toast.error('Images not uploaded')
-      return
-    })
-    
+      setIsLoading(false);
+      toast.error('Images not uploaded');
+      return;
+    });
+
+    const formDataCOPY = {
+      ...formData,
+      imageUrls,
+      geolocation,
+      timestamp: serverTimestamp(),
+    };
+
+    delete formDataCOPY.images;
+    delete formDataCOPY.address;
+
+    location && (formDataCOPY.location = location);
+
+    !formDataCOPY.offer && delete formDataCOPY.discountedPrice;
+
+    const docRef = await addDoc(collection(database, 'listings'), formDataCOPY);
 
     setIsLoading(false);
+
+    toast.success('Your listing has been created.');
+    navigate(`/category/${formDataCOPY.type}/${docRef.id}`);
   };
 
   const onMutate = (e) => {
