@@ -8,6 +8,12 @@ import { database } from '../config/firebase.config';
 
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
+import { Pagination, A11y } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/a11y';
+
 import Spinner from '../components/Spinner';
 import ShareIcon from '../assets/svg/shareIcon.svg';
 
@@ -47,7 +53,23 @@ const Listing = () => {
 
   return (
     <main>
-      {/* SLIDER HERE */}
+      <Swiper
+        modules={[Pagination, A11y]}
+        slidesPerView={1}
+        navigation={true}
+        a11y={true}
+        pagination={{ clickable: true }}>
+        {listing.imageUrls.map((url, index) => (
+          <SwiperSlide key={index}>
+            <div
+              style={{
+                background: `url(${listing.imageUrls[index]}) center no-repeat`,
+                backgroundSize: 'cover',
+              }}
+              className='swiperSlideDiv'></div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
       <div className='shareIconDiv' onClick={clickHandler}>
         <img src={ShareIcon} alt='Share Icon' />
       </div>
@@ -98,7 +120,8 @@ const Listing = () => {
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> Contributors'
               url='https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png'
             />
-            <Marker position={[listing.geolocation.lat, listing.geolocation.lng]}>
+            <Marker
+              position={[listing.geolocation.lat, listing.geolocation.lng]}>
               <Popup>{listing.location}</Popup>
             </Marker>
           </MapContainer>
