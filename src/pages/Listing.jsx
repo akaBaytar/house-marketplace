@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { getDoc, doc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
@@ -14,7 +14,6 @@ const Listing = () => {
   const [isLoadong, setIsLoading] = useState(true);
   const [isShareLinkCopied, setIsShareLinkCopied] = useState(false);
 
-  const navigate = useNavigate();
   const params = useParams();
   const auth = getAuth();
 
@@ -90,8 +89,12 @@ const Listing = () => {
         {/* MAP HERE */}
 
         {auth.currentUser?.uid !== listing.userRef && (
-          <Link to={`/contact/${listing.userRef}?listingName=${listing.name}&listingLocation=${listing.location}`} className='primaryButton'>Contact Landlord</Link>
-        ) }
+          <Link
+            to={`/contact/${listing.userRef}?listingName=${listing.name}`}
+            className='primaryButton'>
+            Contact Landlord
+          </Link>
+        )}
       </div>
     </main>
   );
