@@ -552,6 +552,7 @@ textarea {
 }
 
 .loadMore {
+  display: block;
   cursor: pointer;
   width: 8rem;
   margin: 0 auto;
