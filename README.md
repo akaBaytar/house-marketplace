@@ -32,7 +32,7 @@ House Marketplace project, where homeowners can list their properties for sale o
 `http://localhost:5173/`.
 
 ---
-**Final Words** 
+###### Final Words 
 This project was developed to contribute to my learning journey in React. My main focus was to effectively utilize React components and hooks. After a few upcoming projects, I plan to revisit this one, make styling adjustments, and design a more polished interface on the web.
 
 ---
