@@ -18,6 +18,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Contact from './pages/Contact';
 import CreateListing from './pages/CreateListing';
+import EditListing from './pages/EditListing';
 import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path='/sign-in' element={<SignIn />} />
           <Route path='/sign-up' element={<SignUp />} />
           <Route path='/create-listing' element={<CreateListing />} />
+          <Route path='/edit-listing/:listingID' element={<EditListing />} />
           <Route path='/contact/:landlordID' element={<Contact />} />
           <Route
             path='/category/:categoryName/:listingID'

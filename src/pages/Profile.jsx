@@ -105,7 +105,7 @@ const Profile = () => {
     }));
   };
 
-  // deleting the respective listing
+  // delete the respective listing
   const onDeleteHandler = async (id) => {
     if (window.confirm('Are you sure you want to delete your listing?')) {
       await deleteDoc(doc(database, 'listings', id));
@@ -116,6 +116,9 @@ const Profile = () => {
       toast.success('Successfully deleted your listing.')
     }
   };
+
+  // edit the respective listing
+  const onEditHandler = (listingID) => navigate(`/edit-listing/${listingID}`)
 
   return (
     <div className='profile'>
@@ -169,6 +172,7 @@ const Profile = () => {
                   listing={data}
                   id={id}
                   onDelete={() => onDeleteHandler(id)}
+                  onEdit={() => onEditHandler(id)}
                 />
               ))}
             </ul>
